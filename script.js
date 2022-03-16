@@ -1,5 +1,5 @@
 
-const board = [
+board = [
     null, 0,    null, 1,   null, 2,     null, 3,
     4,    null, 5,    null, 6,   null,  7,    null,
     null, 8,    null, 9,    null, 10,   null, 11,
@@ -34,8 +34,22 @@ function move(mv){
     cells[indexBoard].innerHTML = "";
 
     cells[indexBoard + 9].innerHTML = `<p class="red-piece" id="${mv}"></p>`;
+    moveBoard(mv, indexBoard + 9);
     redsPieces = document.querySelectorAll("p");
+
+
 }
+
+function moveBoard(start, end){
+    let indexBoard = findIndex(start);
+    board[end] =  start; 
+    board[indexBoard] = null;
+    window.alert(indexBoard);
+
+    
+
+}
+
 function right() {
     
     if(board[9+9] == null){
@@ -60,12 +74,9 @@ function findIndex(indx) {
             return i;
         }
     } 
-    window.alert("Noob");
+    window.alert(indx + "    Noob");
 }
 
-if(document.getElementById('0').clicked == true)
-{
-   window.alert("button was clicked");
-}
+
 
 
