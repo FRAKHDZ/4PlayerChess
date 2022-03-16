@@ -28,9 +28,10 @@ function prtnr(x) {
 
 function move(mv){
     let indexBoard = findIndex(mv);
-    document.getElementById(mv).remove();
+    //document.getElementById(mv).remove();
     
-    cells[mv].innerHTML = "";
+    //cells[mv].innerHTML = "";
+    cells[indexBoard].innerHTML = "";
 
     cells[indexBoard + 9].innerHTML = `<p class="red-piece" id="${mv}"></p>`;
     redsPieces = document.querySelectorAll("p");
