@@ -1,139 +1,70 @@
 
 const board = [
-    null, 0, null, 1, null, 2, null, 3,
-    4, null, 5, null, 6, null, 7, null,
-    null, 8, null, 9, null, 10, null, 11,
+    null, 0,    null, 1,   null, 2,     null, 3,
+    4,    null, 5,    null, 6,   null,  7,    null,
+    null, 8,    null, 9,    null, 10,   null, 11,
     null, null, null, null, null, null, null, null,
     null, null, null, null, null, null, null, null,
-    12, null, 13, null, 14, null, 15, null,
-    null, 16, null, 17, null, 18, null, 19,
-    20, null, 21, null, 22, null, 23, null
+    12,   null, 13,   null, 14,   null, 15,   null,
+    null, 16,   null, 17,   null, 18,   null, 19,
+    20,   null, 21,   null, 22,   null, 23,   null
 ]
 
-
-// parses pieceId's and returns the index of that piece's place on the board
-let findPiece = function (pieceId) {
-    let parsed = parseInt(pieceId);
-    return board.indexOf(parsed);
-};
-
-const cells = document.querySelectorAll("td");
 let redsPieces = document.querySelectorAll("p");
-let blacksPieces = document.querySelectorAll("span");
+let cells = document.querySelectorAll("td");
 
-// player properties
-let turn = true;
-let redScore = 12;
-let blackScore = 12;
-let playerPieces;
-
-// selected piece properties
-let selectedPiece = {
-    pieceId: -1,
-    indexOfBoardPiece: -1,
-    isKing: false,
-    seventhSpace: false,
-    ninthSpace: false,
-    fourteenthSpace: false,
-    eighteenthSpace: false,
-    minusSeventhSpace: false,
-    minusNinthSpace: false,
-    minusFourteenthSpace: false,
-    minusEighteenthSpace: false
+for (let i = 0; i < redsPieces.length; i++){
+//redsPieces[10].addEventListener("click", prtnr(10));
+redsPieces[i].addEventListener("click", prtnr.bind(event, i));
 }
 
-/*---------- Event Listeners ----------*/
+function prtnr(x) {
+    //window.alert("click red");
+    let indexBoard = findIndex(x);
+    cells[indexBoard+9].setAttribute("onclick", "move(" + x + ")");
+    //cells[indexBoard+7].addEventListener("click", prtnr2);
+    //cells[indexBoard+7].addEventListener("click", right);
+}
 
-// initialize event listeners on pieces
-function givePiecesEventListeners() {
-    if (turn) {
-        for (let i = 0; i < redsPieces.length; i++) {
-            redsPieces[i].addEventListener("click", getPlayerPieces);
+function move(mv){
+    let indexBoard = findIndex(mv);
+    document.getElementById(mv).remove();
+    
+    cells[mv].innerHTML = "";
+
+    cells[indexBoard + 9].innerHTML = `<p class="red-piece" id="${mv}"></p>`;
+    redsPieces = document.querySelectorAll("p");
+}
+function right() {
+    
+    if(board[9+9] == null){
+        window.alert("move right");
+
+    }
+
+}
+
+function prtnr2() {
+    
+    if(board[9+7] == null){
+        window.alert("move left");
+
+    }
+
+}
+function findIndex(indx) {
+    for (let i = 0; i < board.length; i++){
+        
+        if(indx == board[i]){
+            return i;
         }
-    } else {
-        for (let i = 0; i < blacksPieces.length; i++) {
-            blacksPieces[i].addEventListener("click", getPlayerPieces);
-        }
-    }
+    } 
+    window.alert("Noob");
 }
 
-// holds the length of the players piece count
-function getPlayerPieces() {
-    if (turn) {
-        playerPieces = redsPieces;
-    } else {
-        playerPieces = blacksPieces;
-    }
-    removeCellonclick();
-    resetBorders();
-}
-
-// removes possible moves from old selected piece (* this is needed because the user might re-select a piece *)
-function removeCellonclick() {
-    for (let i = 0; i < cells.length; i++) {
-        cells[i].removeAttribute("onclick");
-    }
-}
-
-// resets borders to default
-function resetBorders() {
-    for (let i = 0; i < playerPieces.length; i++) {
-        playerPieces[i].style.border = "1px solid white";
-    }
-    resetSelectedPieceProperties();
-    getSelectedPiece();
-}
-
-// resets selected piece properties
-function resetSelectedPieceProperties() {
-    selectedPiece.pieceId = -1;
-    selectedPiece.pieceId = -1;
-    selectedPiece.isKing = false;
-    selectedPiece.seventhSpace = false;
-    selectedPiece.ninthSpace = false;
-    selectedPiece.fourteenthSpace = false;
-    selectedPiece.eighteenthSpace = false;
-    selectedPiece.minusSeventhSpace = false;
-    selectedPiece.minusNinthSpace = false;
-    selectedPiece.minusFourteenthSpace = false;
-    selectedPiece.minusEighteenthSpace = false;
-}
-
-// gets ID and index of the board cell its on
-function getSelectedPiece() {
-    selectedPiece.pieceId = parseInt(event.target.id);
-    selectedPiece.indexOfBoardPiece = findPiece(selectedPiece.pieceId);
-    isPieceKing();
-}
-
-// checks if selected piece is a king
-function isPieceKing() {
-    if (document.getElementById(selectedPiece.pieceId).classList.contains("king")) {
-        selectedPiece.isKing = true;
-    } else {
-        selectedPiece.isKing = false;
-    }
-    getAvailableSpaces();
+if(document.getElementById('0').clicked == true)
+{
+   window.alert("button was clicked");
 }
 
 
-// gets the moves that the selected piece can make
-function getAvailableSpaces() {
-    if (board[selectedPiece.indexOfBoardPiece + 7] === null && 
-        cells[selectedPiece.indexOfBoardPiece + 7].classList.contains("noPieceHere") !== true) {
-        selectedPiece.seventhSpace = true;
-    }
-    if (board[selectedPiece.indexOfBoardPiece + 9] === null && 
-        cells[selectedPiece.indexOfBoardPiece + 9].classList.contains("noPieceHere") !== true) {
-        selectedPiece.ninthSpace = true;
-    }
-    if (board[selectedPiece.indexOfBoardPiece - 7] === null && 
-        cells[selectedPiece.indexOfBoardPiece - 7].classList.contains("noPieceHere") !== true) {
-        selectedPiece.minusSeventhSpace = true;
-    }
-    if (board[selectedPiece.indexOfBoardPiece - 9] === null && 
-        cells[selectedPiece.indexOfBoardPiece - 9].classList.contains("noPieceHere") !== true) {
-        selectedPiece.minusNinthSpace = true;
-    }
-    checkAvailableJumpSpaces();
-}
