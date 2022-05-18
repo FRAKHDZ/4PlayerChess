@@ -1,0 +1,44 @@
+*{
+    margin: auto;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+}
+
+p{
+    display: inline-block;
+}
+
+td {
+    text-align: center;
+    background-color: #BA7A3A;
+    width: 65px;
+    height: 65px;
+}
+
+.noPieceHere{
+    background-color: #F0D2B4;
+}
+
+.red-piece{
+    width: 20px;
+    height: 20px;
+    padding: 12px;
+    background-color: red;
+    border: 1 px solid white;
+    border-radius: 50 px;
+}
+
+.black-piece{
+    width: 20px;
+    height: 20px;
+    padding: 12px;
+    background-color: black;
+    border: 1 px solid white;
+    border-radius: 50 px;
+}
